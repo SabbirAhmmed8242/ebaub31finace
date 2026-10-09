@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile | EXIM Bank</title>
+
+
+    <!-- ================= BOOTSTRAP ================= -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- ================= BOOTSTRAP ICONS ================= -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- ================= CUSTOM CSS ================= -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #f4f7fb;
+
+            font-family: Arial, sans-serif;
+
+            color: #212529;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+
+            padding: 13px 0;
+
+        }
+
+
+        .navbar-brand {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+        }
+
+
+        .home-btn {
+
+            border-radius: 9px;
+
+            font-weight: 600;
+
+            margin-right: 8px;
+
+        }
+
+
+        .logout-btn {
+
+            border-radius: 9px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .main-container {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 45px 15px;
+
+        }
+
+
+        /* =====================================================
+           WELCOME
+        ===================================================== */
+
+        .welcome-text {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .welcome-text h2 {
+
+            font-weight: 800;
+
+            color: #17365d;
+
+        }
+
+
+        .welcome-text p {
+
+            color: #6c757d;
+
+            margin-bottom: 0;
+
+        }
+
+
+        /* =====================================================
+           BALANCE CARD
+        ===================================================== */
+
+        .balance-card {
+
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            color: white;
+
+            border-radius: 22px;
+
+            padding: 32px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 12px 35px rgba(13,110,253,0.25);
+
+        }
+
+
+        .balance-label {
+
+            font-size: 15px;
+
+            opacity: 0.85;
+
+        }
+
+
+        .balance-amount {
+
+            font-size: 40px;
+
+            font-weight: 800;
+
+            margin-top: 8px;
+
+        }
+
+
+        .balance-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            background: rgba(255,255,255,0.18);
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+        }
+
+
+        /* =====================================================
+           GENERAL CARD
+        ===================================================== */
+
+        .custom-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            margin-bottom: 35px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.07);
+
+            border: 1px solid #edf0f5;
+
+        }
+
+
+        .section-title {
+
+            font-weight: 800;
+
+            color: #17365d;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .section-subtitle {
+
+            color: #6c757d;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* =====================================================
+           TRANSFER / RECHARGE HEADER
+        ===================================================== */
+
+        .card-header-area {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .card-header-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+        }
+
+
+        .transfer-header-icon {
+
+            background: #eaf2ff;
+
+            color: #0d6efd;
+
+        }
+
+
+        .recharge-header-icon {
+
+            background: #e9f8ef;
+
+            color: #198754;
+
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-label {
+
+            font-weight: 600;
+
+            color: #344054;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-label i {
+
+            color: #0d6efd;
+
+            margin-right: 5px;
+
+        }
+
+
+        .form-control,
+        .form-select {
+
+            min-height: 48px;
+
+            border-radius: 10px;
+
+            border: 1px solid #d0d5dd;
+
+        }
+
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 3px rgba(13,110,253,0.10);
+
+        }
+
+
+        .input-group-text {
+
+            background: #f8f9fa;
+
+            border-radius: 10px 0 0 10px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           TRANSFER BUTTON
+        ===================================================== */
+
+        .transfer-btn {
+
+            min-height: 48px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            color: white;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+
+        }
+
+
+        .transfer-btn:hover {
+
+            color: white;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(13,110,253,0.25);
+
+        }
+
+
+        /* =====================================================
+           RECHARGE BUTTON
+        ===================================================== */
+
+        .recharge-btn {
+
+            min-height: 48px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #198754,
+                #087443
+            );
+
+            color: white;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+
+        }
+
+
+        .recharge-btn:hover {
+
+            color: white;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(25,135,84,0.25);
+
+        }
+
+
+        /* =====================================================
+           PERSONAL INFORMATION
+        ===================================================== */
+
+        .info-box {
+
+            background: #f8f9fa;
+
+            border: 1px solid #e9ecef;
+
+            border-radius: 13px;
+
+            padding: 18px;
+
+            margin-bottom: 18px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .info-box:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.06);
+
+        }
+
+
+        .info-label {
+
+            color: #6c757d;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .info-value {
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+        }
+
+
+        .info-icon {
+
+            color: #0d6efd;
+
+            margin-right: 5px;
+
+        }
+
+
+        /* =====================================================
+           ACTIVITY
+        ===================================================== */
+
+        .activity-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 18px 5px;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .activity-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .activity-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .activity-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #e8f5e9;
+
+            color: #198754;
+
+            font-size: 20px;
+
+        }
+
+
+        .activity-title {
+
+            font-weight: 600;
+
+        }
+
+
+        .activity-date {
+
+            font-size: 13px;
+
+            color: #6c757d;
+
+            margin-top: 3px;
+
+        }
+
+
+        .no-activity {
+
+            text-align: center;
+
+            padding: 35px;
+
+            color: #6c757d;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            text-align: center;
+
+            color: #6c757d;
+
+            padding: 30px 15px;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 576px) {
+
+            .main-container {
+
+                padding: 30px 12px;
+
+            }
+
+
+            .custom-card {
+
+                padding: 22px;
+
+            }
+
+
+            .balance-card {
+
+                padding: 25px;
+
+            }
+
+
+            .balance-amount {
+
+                font-size: 32px;
+
+            }
+
+
+            .card-header-area {
+
+                align-items: flex-start;
+
+            }
+
+
+            .navbar-brand {
+
+                font-size: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container">
+
+
+        <!-- Brand -->
+
+        <a class="navbar-brand"
+           href="{% url 'Home' %}">
+
+            <i class="bi bi-bank2"></i>
+
+            EXIM Bank Agricultural University Bangladesh
+
+        </a>
+
+
+        <!-- Buttons -->
+
+        <div class="d-flex">
+
+
+            <!-- Home -->
+
+            <a href="{% url 'Home' %}"
+               class="btn btn-light btn-sm home-btn">
+
+                <i class="bi bi-house-fill"></i>
+
+                Home
+
+            </a>
+
+
+            <!-- Logout -->
+
+            <a href="{% url 'Logout' %}"
+               class="btn btn-danger btn-sm logout-btn">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="main-container">
+
+
+    <!-- =====================================================
+         WELCOME
+    ===================================================== -->
+
+    <div class="welcome-text">
+
+        <h2>
+
+            Welcome, {{ user.name }} 👋
+
+        </h2>
+
+
+        <p>
+
+            Manage your student account, transfer money
+            and recharge your mobile.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         AVAILABLE BALANCE
+    ===================================================== -->
+
+    <div class="balance-card">
+
+        <div class="row align-items-center">
+
+
+            <div class="col">
+
+
+                <div class="balance-label">
+
+                    <i class="bi bi-wallet2"></i>
+
+                    Available Balance
+
+                </div>
+
+
+                <div class="balance-amount">
+
+                    ৳ {{ BalanceData.AvBalance|default:"0" }}
+
+                </div>
+
+
+            </div>
+
+
+            <div class="col-auto">
+
+                <div class="balance-icon">
+
+                    <i class="bi bi-cash-stack"></i>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TRANSFER MONEY
+    ===================================================== -->
+
+    <div class="custom-card">
+
+
+        <div class="card-header-area">
+
+
+            <div>
+
+                <h4 class="section-title">
+
+                    <i class="bi bi-send-fill text-primary"></i>
+                    Transfer Money
+                </h4>
+                <p class="section-subtitle">
+                    Transfer money to your mobile banking account.
+                </p>
+            </div>
+            <div class="card-header-icon transfer-header-icon">
+                <i class="bi bi-phone"></i>
+            </div>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row g-4">
+                <!-- Payment Method -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-wallet2"></i>
+                        Payment Method
+                    </label>
+                    <select name="TypeOf"
+                            class="form-select"
+                            required>
+
+                        <option value="" selected disabled>
+                            Select Method
+                        </option>
+                        <option value="Nagad">
+                            Transfer Money Bkash
+                        </option>
+                        <option value="bKash">
+                            Transfer Money Nagad
+                        </option>
+                    </select>
+                </div>
+                <!-- Amount -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-cash-stack"></i>
+                        Amount
+                    </label>
+
+
+                    <div class="input-group">
+
+
+                        <span class="input-group-text">
+
+                            ৳
+                        </span>
+                        <input type="number"
+                               name="Amount"
+                               class="form-control"
+                               placeholder="Enter amount"
+                               min="1"
+                               required>
+                    </div>
+                </div>
+                <!-- Mobile Number -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-phone-fill"></i>
+                        Mobile Number
+                    </label>
+                    <input type="password"
+                           name="mobile_number"
+                           class="form-control"
+                           placeholder="{{ProfileData.mobile}}"
+                           maxlength="11"
+                           inputmode="numeric" readonly>
+                </div>
+                <!-- Transfer Button -->
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="submit"
+                            name="transfer"
+                            value="transfer"
+                            class="btn transfer-btn w-100">
+                        <i class="bi bi-send-fill me-2"></i>
+                        Transfer Money
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- =====================================================
+         MOBILE RECHARGE
+    ===================================================== -->
+    <div class="custom-card">
+        <div class="card-header-area">
+            <div>
+                <h4 class="section-title">
+
+                    <i class="bi bi-phone-fill text-success"></i>
+                    Mobile Recharge
+                </h4>
+                <p class="section-subtitle">
+                    Recharge your mobile number easily from your account.
+                </p>
+            </div>
+            <div class="card-header-icon recharge-header-icon">
+                <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row g-4">
+                <!-- Mobile Operator -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-broadcast-pin"></i>
+                        Mobile Operator
+                    </label>
+                </div>
+                <!-- Recharge Type -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-credit-card"></i>
+                        Recharge Type
+                    </label>
+                    <select name="TypeOf"
+                            class="form-select"
+                            required>
+                        <option value="" selected disabled>
+                            Select Type
+                        </option>
+                        <option value="Prepaid">
+                            Recharge
+                        </option>
+                    </select>
+                </div>
+                <!-- Mobile Number -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-phone-fill"></i>
+                        Mobile Number
+                    </label>
+                    <input name="MobileNo"
+                           class="form-control"
+                           placeholder="{{ProfileData.mobile}}"
+                           inputmode="numeric"
+                           readonly>
+                </div>
+                <!-- Recharge Amount -->
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="bi bi-cash-stack"></i>
+                        Recharge Amount
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            ৳
+                        </span>
+                        <input type="number"
+                               name="Amount"
+                               class="form-control"
+                               placeholder="Enter recharge amount"
+                               min="20"
+                               required>
+                    </div>
+                </div>
+                <!-- Recharge Button -->
+                <div class="col-12">
+                    <button type="submit"
+                            name="recharge"
+                            value="recharge"
+                            class="btn recharge-btn w-100">
+                        <i class="bi bi-phone-fill me-2"></i>
+                        Recharge Mobile
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- =====================================================
+         PERSONAL INFORMATION
+    ===================================================== -->
+    <div class="custom-card">
+        <h4 class="section-title">
+            <i class="bi bi-person-vcard"></i>
+            Personal Information
+        </h4>
+        <p class="section-subtitle">
+            Your registered account information.
+        </p>
+        <div class="row">
+            <!-- Name -->
+            <div class="col-md-6">
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="bi bi-person-fill info-icon"></i>
+                        Full Name
+                    </div>
+                    <div class="info-value">
+                        {{ ProfileData.naem }}
+                    </div>
+                </div>
+            </div>
+            <!-- Registration -->
+            <div class="col-md-6">
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="bi bi-card-text info-icon"></i>
+                        Registration Number
+                    </div>
+                    <div class="info-value">
+                        {{ ProfileData.reg_num }}
+                    </div>
+                </div>
+            </div>
+            <!-- Batch -->
+            <div class="col-md-6">
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="bi bi-mortarboard-fill info-icon"></i>
+                        Batch
+                    </div>
+                    <div class="info-value">
+                        {{ ProfileData.batch }}
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile -->
+            <div class="col-md-6">
+                <div class="info-box">
+                    <div class="info-label">
+                        <i class="bi bi-telephone-fill info-icon"></i>
+                        Mobile Number
+                    </div>
+                    <div class="info-value">
+                        {{ ProfileData.mobile }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =====================================================
+         RECENT ACTIVITY
+    ===================================================== -->
+    <div class="custom-card">
+
+        <h4 class="section-title">
+            <i class="bi bi-clock-history"></i>
+            Recent Activity
+        </h4>
+        <p class="section-subtitle">
+            Your latest account activities.
+        </p>
+        {% if activities %}
+            {% for activity in activities %}
+            <div class="activity-item">
+                <div class="activity-left">
+                    <div class="activity-icon">
+                        <i class="bi bi-arrow-down-circle-fill"></i>
+                    </div>
+                    <div>
+                        <div class="activity-title">
+                            {{ activity.reason }}
+                        </div>
+                        <div class="activity-date">
+                            {{ activity.DaT }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+
+            <div class="no-activity">
+                <i class="bi bi-inbox fs-1"></i>
+                <p class="mt-3 mb-0">
+                    No activity found.
+                </p>
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+
+<footer>
+    © 2026 EXIM Bank Agricultural University Bangladesh
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

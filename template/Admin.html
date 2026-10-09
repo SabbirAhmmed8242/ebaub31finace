@@ -1,0 +1,765 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bank System - Admin Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body {
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            min-height: 100vh;
+            background: #0b1f3a;
+            position: fixed;
+            width: 250px;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 25px;
+            margin: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+        }
+
+
+        /* Main */
+
+        .main {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+
+        /* Cards */
+
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            transition: 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            background: #e8efff;
+            color: #2563eb;
+        }
+
+        .amount {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+        /* Section */
+
+        .section-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            margin-top: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+
+        /* Student */
+
+        .student-box {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 4px solid #2563eb;
+        }
+
+
+        /* Table */
+
+        .table th {
+            background: #f1f5f9;
+            white-space: nowrap;
+        }
+
+        .badge-add {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-expense {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+
+        /* Mobile */
+
+        @media(max-width: 768px) {
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .logo {
+                font-size: 0;
+            }
+
+            .logo i {
+                font-size: 22px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                padding: 13px 5px;
+            }
+
+            .sidebar a span {
+                display: none;
+            }
+
+            .sidebar i {
+                margin: 0;
+            }
+
+            .main {
+                margin-left: 70px;
+                padding: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <i class="bi bi-bank"></i>
+        <span>Bank System</span>
+    </div>
+
+    <a href="#" class="active">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="#">
+        <i class="bi bi-people"></i>
+        <span>Students</span>
+    </a>
+
+    <a href="#">
+        <i class="bi bi-person-plus"></i>
+        <span>Create User</span>
+    </a>
+
+    <a href="#">
+        <i class="bi bi-cash-coin"></i>
+        <span>Add Money</span>
+    </a>
+
+    <a href="#">
+        <i class="bi bi-wallet2"></i>
+        <span>Expense</span>
+    </a>
+
+    <a href="#">
+        <i class="bi bi-clock-history"></i>
+        <span>Transactions</span>
+    </a>
+
+    <a href="#" class="text-danger">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+    </a>
+
+</div>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar d-flex justify-content-between align-items-center">
+
+        <div>
+            <h4 class="mb-0">Admin Dashboard</h4>
+            <small class="text-muted">
+                EXIM Bank Agricultural University Bangladesh
+            </small>
+        </div>
+
+        <div>
+            <button class="btn btn-light">
+                <i class="bi bi-person-circle"></i>
+                Admin
+            </button>
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= DASHBOARD CARDS ================= -->
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted mb-1">
+                            Total Students
+                        </p>
+
+                        <div class="amount">
+                            245
+                        </div>
+                    </div>
+
+                    <div class="card-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted mb-1">
+                            Total Balance
+                        </p>
+                        <div class="amount">
+                           BDT {{ data.ConsBalance }}
+                        </div>
+                    </div>
+                    <div class="card-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ================= STUDENT SEARCH ================= -->
+    <div class="section-card">
+        <div class="section-title">
+            <i class="bi bi-search"></i>
+            Find Student Account
+        </div>
+        <div class="row g-3">
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control form-control-lg"
+                       placeholder="Enter Registration Number">
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-search"></i>
+                    Search Student
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Registration</th>
+                        <th>Student</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Mobile</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+    {% for Withdraw in WithdrawData %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <strong>{{ Withdraw.Reg }}</strong>
+            </td>
+            <td>
+                Sabbir Ahmmed
+            </td>
+            <td>
+                <span class="badge badge-add px-3 py-2">
+                    {{ Withdraw.TypeOf }}
+                </span>
+            </td>
+            <td class="text-success fw-bold">
+                {{ Withdraw.Ammount }}
+            </td>
+            <td>
+                {{ Withdraw.Mobile }}
+            </td>
+            <td>
+                02 Oct 2026
+            </td>
+            <td>
+                <form action="" method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ Withdraw.id }}">
+                    <input type="hidden" name="reg" value="{{ Withdraw.Reg }}">
+                    <input type="hidden" name="ammount" value="{{ Withdraw.Ammount }}">
+                    <button type="submit" name="action" value="confrirm" class="btn btn-success btn-sm">Confirm</button>
+                    <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+            </table>
+        </div>
+
+
+
+
+    <!-- ================= MONEY ACTION ================= -->
+
+    <div class="row g-4">
+
+
+        <!-- ADD MONEY -->
+
+        <div class="col-lg-6">
+
+            <div class="section-card">
+
+                <div class="section-title text-success">
+
+                    <i class="bi bi-plus-circle"></i>
+                    Add Money
+
+                </div>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+                        {% csrf_token %}
+                        <label class="form-label">
+                            Registration Number
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               name="DRegistration"
+                               placeholder="Enter registration number">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Amount
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ৳
+                            </span>
+
+                            <input type="number"
+                                   class="form-control"
+                                   name="AmDep"
+                                   placeholder="Enter amount">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Reason
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="3"
+                                  name="depReson"
+                                  placeholder="Why is money being added?"></textarea>
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success w-100">
+
+                        <i class="bi bi-plus-lg"></i>
+                        Add Money
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EXPENSE -->
+
+        <div class="col-lg-6">
+
+            <div class="section-card">
+
+                <div class="section-title text-danger">
+
+                    <i class="bi bi-dash-circle"></i>
+                    Money Expense
+
+                </div>
+
+                <form>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Registration Number
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Enter registration number">
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Amount
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ৳
+                            </span>
+
+                            <input type="number"
+                                   class="form-control"
+                                   placeholder="Enter expense amount">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Expense Reason
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="3"
+                                  placeholder="Why was the money spent?"></textarea>
+
+                    </div>
+
+
+                    <button class="btn btn-danger w-100">
+
+                        <i class="bi bi-dash-lg"></i>
+                        Deduct Money
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= TRANSACTION HISTORY ================= -->
+
+    <div class="section-card">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div class="section-title mb-0">
+
+                <i class="bi bi-clock-history"></i>
+                Recent Transactions
+
+            </div>
+
+            <button class="btn btn-outline-primary btn-sm">
+                View All
+            </button>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Registration</th>
+
+                        <th>Student</th>
+
+                        <th>Type</th>
+
+                        <th>Amount</th>
+
+                        <th>Reason</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>01</td>
+
+                        <td>
+                            <strong>31001</strong>
+                        </td>
+
+                        <td>
+                            Sabbir Ahmmed
+                        </td>
+
+                        <td>
+                            <span class="badge badge-add px-3 py-2">
+                                Added
+                            </span>
+                        </td>
+
+                        <td class="text-success fw-bold">
+                            + ৳ 2,000
+                        </td>
+
+                        <td>
+                            Monthly Deposit
+                        </td>
+
+                        <td>
+                            02 Oct 2026
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>02</td>
+
+                        <td>
+                            <strong>31005</strong>
+                        </td>
+
+                        <td>
+                            Rahim Ahmed
+                        </td>
+
+                        <td>
+                            <span class="badge badge-expense px-3 py-2">
+                                Expense
+                            </span>
+                        </td>
+
+                        <td class="text-danger fw-bold">
+                            - ৳ 500
+                        </td>
+
+                        <td>
+                            Library Fee
+                        </td>
+
+                        <td>
+                            02 Oct 2026
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>03</td>
+
+                        <td>
+                            <strong>31012</strong>
+                        </td>
+
+                        <td>
+                            Karim Hasan
+                        </td>
+
+                        <td>
+                            <span class="badge badge-add px-3 py-2">
+                                Added
+                            </span>
+                        </td>
+
+                        <td class="text-success fw-bold">
+                            + ৳ 1,500
+                        </td>
+
+                        <td>
+                            Monthly Deposit
+                        </td>
+
+                        <td>
+                            01 Oct 2026
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>04</td>
+
+                        <td>
+                            <strong>31020</strong>
+                        </td>
+
+                        <td>
+                            Nayeem Islam
+                        </td>
+
+                        <td>
+                            <span class="badge badge-expense px-3 py-2">
+                                Expense
+                            </span>
+                        </td>
+
+                        <td class="text-danger fw-bold">
+                            - ৳ 800
+                        </td>
+
+                        <td>
+                            Event Fee
+                        </td>
+
+                        <td>
+                            01 Oct 2026
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    <!-- ================= FOOTER ================= -->
+    <div class="text-center text-muted mt-4 mb-3">
+
+        © 2026 Bank System Admin Panel
+
+    </div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>

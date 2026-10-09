@@ -1,0 +1,1148 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EXIM Bank Agricultural University | Banking System</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8fc;
+            color: #1d2939;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 13px 0;
+        }
+
+
+        .brand-name {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+
+        .brand-red {
+            color: #e31b23;
+        }
+
+
+        .brand-green {
+            color: #00843d;
+        }
+
+
+        .navbar-brand small {
+            display: block;
+            font-size: 10px;
+            color: #667085;
+            letter-spacing: 1px;
+        }
+
+
+        .nav-link {
+            font-weight: 600;
+            color: #344054 !important;
+            margin-left: 15px;
+            transition: 0.3s;
+        }
+
+
+        .nav-link:hover {
+            color: #00843d !important;
+        }
+
+
+        .nav-btn {
+            border-radius: 9px;
+            padding: 8px 18px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+
+            min-height: 650px;
+
+            display: flex;
+
+            align-items: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #006b3c,
+                    #004d2d
+                );
+
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.06);
+
+            top: -220px;
+            right: -100px;
+
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.05);
+
+            bottom: -180px;
+            left: -100px;
+
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            color: white;
+
+        }
+
+
+        .welcome-text {
+
+            display: inline-block;
+
+            padding: 8px 15px;
+
+            border-radius: 50px;
+
+            background: rgba(255,255,255,0.10);
+
+            border: 1px solid rgba(255,255,255,0.20);
+
+            color: #d1fae5;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .university-name {
+
+            font-size: clamp(50px, 7vw, 85px);
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .university-name .red {
+            color: #ff5555;
+        }
+
+
+        .university-name .green {
+            color: #8ff0b5;
+        }
+
+
+        .subtitle {
+
+            font-size: clamp(20px, 3vw, 30px);
+
+            font-weight: 400;
+
+            color: #e6fff0;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .description {
+
+            max-width: 650px;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            color: #d9f5e6;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .batch-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: rgba(255,255,255,0.12);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            padding: 11px 20px;
+
+            border-radius: 50px;
+
+            margin-bottom: 30px;
+
+            backdrop-filter: blur(10px);
+
+            font-weight: 600;
+
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .hero-btn {
+
+            padding: 13px 28px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            transition: 0.3s;
+
+        }
+
+
+        .btn-login {
+
+            background: white;
+
+            color: #00843d;
+
+        }
+
+
+        .btn-login:hover {
+
+            background: transparent;
+
+            color: white;
+
+            border: 2px solid white;
+
+            transform: translateY(-3px);
+
+        }
+
+
+        .btn-registration {
+
+            background: #e31b23;
+
+            color: white;
+
+            margin-left: 10px;
+
+        }
+
+
+        .btn-registration:hover {
+
+            background: #c9151c;
+
+            transform: translateY(-3px);
+
+        }
+
+
+        .btn-profile {
+
+            background: white;
+
+            color: #00843d;
+
+        }
+
+
+        .btn-profile:hover {
+
+            background: #f0fff6;
+
+            color: #006b3c;
+
+            transform: translateY(-3px);
+
+        }
+
+
+        .btn-logout {
+
+            background: #e31b23;
+
+            color: white;
+
+            margin-left: 10px;
+
+        }
+
+
+        .btn-logout:hover {
+
+            background: #c9151c;
+
+            transform: translateY(-3px);
+
+        }
+
+
+        /* ================= BANK CARD ================= */
+
+        .bank-card {
+
+            position: relative;
+
+            z-index: 2;
+
+            background: rgba(255,255,255,0.12);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            border-radius: 25px;
+
+            padding: 35px;
+
+            color: white;
+
+            backdrop-filter: blur(15px);
+
+            box-shadow: 0 25px 60px rgba(0,0,0,0.20);
+
+        }
+
+
+        .bank-card-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            border-radius: 20px;
+
+            background: white;
+
+            color: #00843d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 35px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .bank-card h3 {
+
+            font-weight: 800;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .bank-card p {
+
+            color: #e2f7eb;
+
+            line-height: 1.8;
+
+        }
+
+
+        .secure-box {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.08);
+
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+
+            padding: 90px 0;
+
+            background: white;
+
+        }
+
+
+        .section-label {
+
+            color: #00843d;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .section-title {
+
+            font-weight: 800;
+
+            font-size: 40px;
+
+            margin-top: 8px;
+
+        }
+
+
+        .feature-card {
+
+            height: 100%;
+
+            padding: 35px 30px;
+
+            border-radius: 20px;
+
+            background: #f8fafc;
+
+            border: 1px solid #eaecf0;
+
+            transition: 0.3s;
+
+        }
+
+
+        .feature-card:hover {
+
+            transform: translateY(-8px);
+
+            box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+
+        }
+
+
+        .feature-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background: #e8f7ef;
+
+            color: #00843d;
+
+            font-size: 28px;
+
+            margin: 0 auto 20px;
+
+        }
+
+
+        .feature-card h5 {
+
+            font-weight: 800;
+
+        }
+
+
+        .feature-card p {
+
+            color: #667085;
+
+            line-height: 1.7;
+
+            margin-bottom: 0;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background: #101828;
+
+            color: #98a2b3;
+
+            padding: 35px 0;
+
+        }
+
+
+        footer strong {
+
+            color: white;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 991px) {
+
+            .hero {
+
+                padding: 90px 0;
+
+            }
+
+            .bank-card {
+
+                margin-top: 50px;
+
+            }
+
+            .navbar-nav {
+
+                margin-top: 15px;
+
+            }
+
+            .nav-btn {
+
+                display: inline-block;
+
+                margin: 8px 0 0 0;
+
+            }
+
+        }
+
+
+        @media(max-width: 576px) {
+
+            .hero {
+
+                padding: 70px 0;
+
+            }
+
+            .university-name {
+
+                font-size: 55px;
+
+            }
+
+            .subtitle {
+
+                font-size: 21px;
+
+            }
+
+            .hero-btn {
+
+                width: 100%;
+
+                justify-content: center;
+
+                margin: 5px 0;
+
+            }
+
+            .btn-registration,
+
+            .btn-logout {
+
+                margin-left: 0;
+
+            }
+
+            .section-title {
+
+                font-size: 32px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+
+        <a class="navbar-brand" href="{% url 'Home' %}">
+
+            <span class="brand-name">
+
+                <span class="brand-red">E</span><span class="brand-green">XIM</span>
+
+            </span>
+
+            <small>
+                Agricultural University Bangladesh
+            </small>
+
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="{% url 'Home' %}">
+
+                        <i class="bi bi-house-door-fill"></i>
+                        Home
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="#features">
+
+                        Services
+
+                    </a>
+
+                </li>
+
+
+                {% if logged_in %}
+
+                    <!-- LOGGED IN -->
+
+                    <li class="nav-item">
+
+                        <a href="{% url 'profile' %}"
+                           class="btn btn-success nav-btn">
+
+                            <i class="bi bi-person-circle"></i>
+                            Profile
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="{% url 'Logout' %}"
+                           class="btn btn-danger nav-btn">
+
+                            <i class="bi bi-box-arrow-right"></i>
+                            Logout
+
+                        </a>
+
+                    </li>
+
+
+                {% else %}
+
+                    <!-- NOT LOGGED IN -->
+
+                    <li class="nav-item">
+
+                        <a href="{% url 'Login' %}"
+                           class="btn btn-outline-success nav-btn">
+
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Login
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="{% url 'registration' %}"
+                           class="btn btn-success nav-btn">
+
+                            <i class="bi bi-person-plus-fill"></i>
+                            Registration
+
+                        </a>
+
+                    </li>
+
+                {% endif %}
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+
+            <!-- LEFT -->
+
+            <div class="col-lg-7 hero-content">
+
+
+                <div class="welcome-text">
+
+                    <i class="bi bi-bank2 me-2"></i>
+
+                    Student Banking Portal
+
+                </div>
+
+
+                <h1 class="university-name">
+
+                    <span class="red">E</span><span class="green">XIM</span>
+
+                </h1>
+
+
+                <h2 class="subtitle">
+
+                    Bank Agricultural University Bangladesh
+
+                </h2>
+
+
+                <p class="description">
+
+                    Welcome to the 31st Batch Banking System.
+                    A simple, secure and modern platform designed
+                    to manage student banking information,
+                    balances and transaction activities.
+
+                </p>
+
+
+                <div class="batch-badge">
+
+                    <i class="bi bi-mortarboard-fill me-2"></i>
+
+                    31<sup>st</sup> Batch Banking System
+
+                </div>
+
+
+                <div>
+
+
+                    {% if logged_in %}
+
+                        <!-- LOGGED IN BUTTONS -->
+
+                        <a href="{% url 'profile' %}"
+                           class="hero-btn btn-profile">
+
+                            <i class="bi bi-person-circle me-2"></i>
+
+                            My Profile
+
+                        </a>
+
+
+                        <a href="{% url 'Logout' %}"
+                           class="hero-btn btn-logout">
+
+                            <i class="bi bi-box-arrow-right me-2"></i>
+
+                            Logout
+
+                        </a>
+
+
+                    {% else %}
+
+                        <!-- NOT LOGGED IN BUTTONS -->
+
+                        <a href="{% url 'Login' %}"
+                           class="hero-btn btn-login">
+
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                            Login
+
+                        </a>
+
+
+                        <a href="{% url 'registration' %}"
+                           class="hero-btn btn-registration">
+
+                            <i class="bi bi-person-plus-fill me-2"></i>
+
+                            Registration
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-5">
+
+
+                <div class="bank-card">
+
+
+                    <div class="bank-card-icon">
+
+                        <i class="bi bi-bank2"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Student Banking Portal
+
+                    </h3>
+
+
+                    <p>
+
+                        Manage your student account,
+                        view available balance and keep track
+                        of your banking activities from one place.
+
+                    </p>
+
+
+                    <div class="secure-box">
+
+                        <div class="d-flex align-items-center">
+
+                            <i class="bi bi-shield-check fs-2 me-3"></i>
+
+                            <div>
+
+                                <strong>
+                                    Secure & Reliable
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    Your account information is protected.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="features">
+
+    <div class="container">
+
+
+        <div class="text-center mb-5">
+
+            <div class="section-label">
+
+                Banking Services
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Everything You Need
+
+            </h2>
+
+
+            <p class="text-muted mt-3">
+
+                Manage your student banking activities easily
+                from one secure platform.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            <!-- CARD 1 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-person-vcard-fill"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Student Account
+
+                    </h5>
+
+
+                    <p>
+
+                        View your personal information,
+                        registration details and account profile.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CARD 2 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-wallet2"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Balance Management
+
+                    </h5>
+
+
+                    <p>
+
+                        Easily view your available balance
+                        and monitor your account information.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CARD 3 -->
+
+            <div class="col-md-4">
+
+                <div class="feature-card text-center">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-clock-history"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Activity History
+
+                    </h5>
+
+
+                    <p>
+
+                        Keep track of your latest banking
+                        transactions and account activities.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <div class="container text-center">
+        <div class="mb-2">
+            <strong>
+                <span class="text-danger">E</span><span class="text-success">XIM</span>
+                Bank Agricultural University Bangladesh
+            </strong>
+        </div>
+
+        <p class="mb-1">
+            31<sup>st</sup> Batch Banking System
+        </p>
+        <small>
+            © 2026 All Rights Reserved.
+        </small>
+
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
