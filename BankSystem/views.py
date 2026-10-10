@@ -80,7 +80,7 @@ def Registration(request):
                     'error': 'Registration number ebong mobile-e valid number din.'
                 })
 
-            if reg_num <= 0 or mobile <= 0:
+            if int(reg_num) <= 0 or int(mobile) <= 0:
                 return render(request, "Registration.html", {
                     'error': 'Registration ebong mobile number valid hote hobe.'
                 })
