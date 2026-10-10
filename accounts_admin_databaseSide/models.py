@@ -11,8 +11,8 @@ class Reg_Log_information(models.Model):
 class Profile(models.Model):
     naem =  models.CharField(max_length=35)
     UserName = models.CharField(max_length=35)
-    mobile = models.IntegerField()
-    reg_num = models.IntegerField()
+    mobile = models.CharField()
+    reg_num = models.CharField()
     batch = models.CharField(max_length=10)
 
 class Balance(models.Model):
