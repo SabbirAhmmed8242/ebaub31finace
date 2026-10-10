@@ -44,41 +44,61 @@ def profile(request):
 
     return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
 
+
+
 def Registration(request):
     if 'user_id' in request.session:
-            return redirect('profile')
+        return redirect('profile')
+
     if request.method == "POST":
-       name = request.POST.get('Name')
-       username = request.POST.get('UserName')
-       batch = request.POST.get('Batch')
-       Registration = request.POST.get('Registration')
-       Mobile = request.POST.get('Mobile')
-       Password = request.POST.get('Password')
+        name = request.POST.get('Name')
+        username = request.POST.get('UserName')
+        batch = request.POST.get('Batch')
+        registration = request.POST.get('Registration')
+        mobile = request.POST.get('Mobile')
+        password = request.POST.get('Password')
 
-       hash_pass = make_password(Password)
+        if not all([name, username, batch, registration, mobile, password]):
+            return render(request, "Registration.html", {
+                'error': 'Please fill in all fields.'
+            })
 
-       if not Reg_Log_information.objects.filter(reg_num = Registration).exists():
-           NewAcc = Reg_Log_information.objects.create(
-                name = name,
-                UserName = username,
-                mobile = Mobile,
-                reg_num = Registration,
-                batch = batch,
-                password = hash_pass
-           )
-           NewPro = Profile.objects.create(
-            naem = name,
-            UserName =  username,
-            mobile = Mobile,
-            reg_num =  Registration,
-            batch =  batch
-           )
-           NewPro.save()
-           NewAcc.save()
-           return redirect('Login')
-       else:
-           return redirect('registration')
-    return render(request,"Registration.html")
+        if Reg_Log_information.objects.filter(reg_num=registration).exists():
+            return redirect('registration')
+
+        try:
+            with transaction.atomic():
+                hash_pass = make_password(password)
+
+                Reg_Log_information.objects.create(
+                    name=name,
+                    UserName=username,
+                    mobile=mobile,
+                    reg_num=registration,
+                    batch=batch,
+                    password=hash_pass
+                )
+
+                Profile.objects.create(
+                    naem=name,
+                    UserName=username,
+                    mobile=mobile,
+                    reg_num=registration,
+                    batch=batch
+                )
+
+            return redirect('Login')
+
+        except Exception:
+            # Production-এ exception details server log-এ দেখো।
+            import logging
+            logging.exception("Registration failed")
+            return render(request, "Registration.html", {
+                'error': 'Registration failed. Please try again.'
+            })
+
+    return render(request, "Registration.html")
+
 
 def Login(request):
     if 'user_id' in request.session:
