@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
-from django.db import transaction
+from django.db import transaction, IntegrityError, DatabaseError
 from django.contrib.auth.hashers import make_password,check_password
 from django.db.models import F
 from accounts_admin_databaseSide.models import Details,Profile,Reg_Log_information,Balance,Details,RequestaRgWi
@@ -44,57 +44,117 @@ def profile(request):
 
     return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
 
+
+import logging
+logger = logging.getLogger(__name__)
+
 def Registration(request):
-    # Already logged in hole profile e pathao
     if 'user_id' in request.session:
         return redirect('profile')
 
     if request.method == "POST":
-        name = request.POST.get('Name', '').strip()
-        username = request.POST.get('UserName', '').strip()
-        batch = request.POST.get('Batch', '').strip()
-        reg_num = int(request.POST.get('Registration', '').strip())
-        mobile = int(request.POST.get('Mobile', '').strip())
-        password = request.POST.get('Password', '')
+        # Step 1: Form data collect
+        try:
+            name = request.POST.get('Name', '').strip()
+            username = request.POST.get('UserName', '').strip()
+            batch = request.POST.get('Batch', '').strip()
+            reg_input = request.POST.get('Registration', '').strip()
+            mobile_input = request.POST.get('Mobile', '').strip()
+            password = request.POST.get('Password', '')
 
-        # Kono field faka thakle
-        if not all([name, username, batch, reg_num, mobile, password]):
-            return render(request, "Registration.html", {
-                'error': 'Shob field puron korun.'
-            })
+            # Step 2: Empty field check
+            if not all([
+                name, username, batch,
+                reg_input, mobile_input, password
+            ]):
+                return render(request, "Registration.html", {
+                    'error': 'Shob field puron korun.'
+                })
 
-        # Reg number ba username age thekei thakle
-        if Reg_Log_information.objects.filter(reg_num=reg_num).exists():
-            return render(request, "Registration.html", {
-                'error': 'Ei registration number diye age thekei account ache.'
-            })
+            # Step 3: Number validation
+            try:
+                reg_num = int(reg_input)
+                mobile = int(mobile_input)
+            except ValueError:
+                return render(request, "Registration.html", {
+                    'error': 'Registration number ebong mobile-e valid number din.'
+                })
 
-        if Reg_Log_information.objects.filter(UserName=username).exists():
-            return render(request, "Registration.html", {
-                'error': 'Ei username already newa hoyeche.'
-            })
+            if reg_num <= 0 or mobile <= 0:
+                return render(request, "Registration.html", {
+                    'error': 'Registration ebong mobile number valid hote hobe.'
+                })
 
-        hash_pass = make_password(password)
+            # Step 4: Duplicate registration check
+            if Reg_Log_information.objects.filter(
+                reg_num=reg_num
+            ).exists():
+                return render(request, "Registration.html", {
+                    'error': 'Ei registration number diye account ache.'
+                })
 
-        # Duita create ek sathe hobe, noyto kono tai hobe na
-        with transaction.atomic():
-            Reg_Log_information.objects.create(
-                name=name,
-                UserName=username,
-                mobile=mobile,
-                reg_num=reg_num,
-                batch=batch,
-                password=hash_pass
+            # Step 5: Duplicate username check
+            if Reg_Log_information.objects.filter(
+                UserName=username
+            ).exists():
+                return render(request, "Registration.html", {
+                    'error': 'Ei username age thekei newa hoyeche.'
+                })
+
+            # Step 6: Create account and profile together
+            hash_pass = make_password(password)
+
+            with transaction.atomic():
+                Reg_Log_information.objects.create(
+                    name=name,
+                    UserName=username,
+                    mobile=mobile,
+                    reg_num=reg_num,
+                    batch=batch,
+                    password=hash_pass
+                )
+
+                Profile.objects.create(
+                    naem=name,
+                    UserName=username,
+                    mobile=mobile,
+                    reg_num=reg_num,
+                    batch=batch
+                )
+
+            logger.info(
+                "Registration successful. Registration number: %s",
+                reg_num
             )
-            Profile.objects.create(
-                naem=name,          
-                UserName=username,
-                mobile=mobile,
-                reg_num=reg_num,
-                batch=batch
-            )
 
-        return redirect('Login')
+            return redirect('Login')
+
+        except IntegrityError:
+            logger.exception(
+                "Registration failed at database constraint check."
+            )
+            return render(request, "Registration.html", {
+                'error': 'Ei data diye account create kora jayni. '
+                         'Registration number ba username check korun.'
+            })
+
+        except DatabaseError:
+            logger.exception(
+                "Registration failed due to database error."
+            )
+            return render(request, "Registration.html", {
+                'error': 'Database-e somossa hoyeche. '
+                         'Pore abar chesta korun.'
+            })
+
+        except Exception:
+            logger.exception(
+                "Unexpected error occurred in Registration view."
+            )
+            return render(request, "Registration.html", {
+                'error': 'Registration-e unexpected somossa hoyeche. '
+                         'Admin-ke log check korte bolun.'
+            })
 
     return render(request, "Registration.html")
 
