@@ -53,8 +53,8 @@ def Registration(request):
         name = request.POST.get('Name', '').strip()
         username = request.POST.get('UserName', '').strip()
         batch = request.POST.get('Batch', '').strip()
-        reg_num = request.POST.get('Registration', '').strip()
-        mobile = request.POST.get('Mobile', '').strip()
+        reg_num = int(request.POST.get('Registration', '').strip())
+        mobile = int(request.POST.get('Mobile', '').strip())
         password = request.POST.get('Password', '')
 
         # Kono field faka thakle
@@ -87,7 +87,7 @@ def Registration(request):
                 password=hash_pass
             )
             Profile.objects.create(
-                naem=name,          # ager code e 'naem' typo chilo
+                naem=name,          
                 UserName=username,
                 mobile=mobile,
                 reg_num=reg_num,
