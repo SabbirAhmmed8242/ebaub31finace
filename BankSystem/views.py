@@ -87,7 +87,7 @@ def Registration(request):
                 password=hash_pass
             )
             Profile.objects.create(
-                name=name,          # ager code e 'naem' typo chilo
+                naem=name,          # ager code e 'naem' typo chilo
                 UserName=username,
                 mobile=mobile,
                 reg_num=reg_num,
