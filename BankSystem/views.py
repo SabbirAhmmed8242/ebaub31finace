@@ -44,7 +44,7 @@ def profile(request):
 
     return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
 
-def registration_view(request):
+def Registration(request):
     # Already logged in hole profile e pathao
     if 'user_id' in request.session:
         return redirect('profile')
