@@ -73,8 +73,8 @@ def Registration(request):
 
             # Step 3: Number validation
             try:
-                reg_num = int(reg_input)
-                mobile = int(mobile_input)
+                reg_num = reg_input
+                mobile = mobile_input
             except ValueError:
                 return render(request, "Registration.html", {
                     'error': 'Registration number ebong mobile-e valid number din.'
