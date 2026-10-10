@@ -44,39 +44,59 @@ def profile(request):
 
     return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
 
-def Registration(request):
+def registration_view(request):
+    # Already logged in hole profile e pathao
     if 'user_id' in request.session:
-            return redirect('profile')
+        return redirect('profile')
+
     if request.method == "POST":
-       name = request.POST.get('Name')
-       username = request.POST.get('UserName')
-       batch = request.POST.get('Batch')
-       Registration = request.POST.get('Registration')
-       Mobile = request.POST.get('Mobile')
-       Password = request.POST.get('Password')
+        name = request.POST.get('Name', '').strip()
+        username = request.POST.get('UserName', '').strip()
+        batch = request.POST.get('Batch', '').strip()
+        reg_num = request.POST.get('Registration', '').strip()
+        mobile = request.POST.get('Mobile', '').strip()
+        password = request.POST.get('Password', '')
 
-       hash_pass = make_password(Password)
+        # Kono field faka thakle
+        if not all([name, username, batch, reg_num, mobile, password]):
+            return render(request, "Registration.html", {
+                'error': 'Shob field puron korun.'
+            })
 
-       if not Reg_Log_information.objects.filter(reg_num = Registration).exists():
+        # Reg number ba username age thekei thakle
+        if Reg_Log_information.objects.filter(reg_num=reg_num).exists():
+            return render(request, "Registration.html", {
+                'error': 'Ei registration number diye age thekei account ache.'
+            })
+
+        if Reg_Log_information.objects.filter(UserName=username).exists():
+            return render(request, "Registration.html", {
+                'error': 'Ei username already newa hoyeche.'
+            })
+
+        hash_pass = make_password(password)
+
+        # Duita create ek sathe hobe, noyto kono tai hobe na
+        with transaction.atomic():
             Reg_Log_information.objects.create(
-                name = name,
-                UserName = username,
-                mobile = Mobile,
-                reg_num = Registration,
-                batch = batch,
-                password = hash_pass
+                name=name,
+                UserName=username,
+                mobile=mobile,
+                reg_num=reg_num,
+                batch=batch,
+                password=hash_pass
             )
             Profile.objects.create(
-            naem = name,
-            UserName =  username,
-            mobile = Mobile,
-            reg_num =  Registration,
-            batch =  batch
+                name=name,          # ager code e 'naem' typo chilo
+                UserName=username,
+                mobile=mobile,
+                reg_num=reg_num,
+                batch=batch
             )
-            return redirect('Login')
-       else:
-           return redirect('registration')
-    return render(request,"Registration.html")
+
+        return redirect('Login')
+
+    return render(request, "Registration.html")
 
 def Login(request):
     if 'user_id' in request.session:
