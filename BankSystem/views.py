@@ -33,13 +33,13 @@ def profile(request):
             reg=registration
         ).first()
 
-        if BalanceData is None:
-            return render(request, "Profile.html", {
-                'error': 'এই account-এর Balance record পাওয়া যায়নি।',
-                'activities': Details.objects.filter(
-                    reg=registration
-                ).order_by('-DaT')
-            })
+        # if BalanceData is None:
+        #     return render(request, "Profile.html", {
+        #         'error': 'এই account-এর Balance record পাওয়া যায়নি।',
+        #         'activities': Details.objects.filter(
+        #             reg=registration
+        #         ).order_by('-DaT')
+        # })
 
         ProfileData = Profile.objects.filter(
             reg_num=registration
