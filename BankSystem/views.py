@@ -25,7 +25,7 @@ def profile(request):
 
         registration = user.reg_num
 
-        if str(registration) == "6026100001141000":
+        if str(registration) == "602610001141000":
             return redirect('adminpage')
 
         # একজন ব্যবহারকারীর Balance record একাধিক হলে প্রথমটি নেবে
@@ -228,7 +228,7 @@ def Admin(request):
 
     user = Reg_Log_information.objects.get(id=user_id)
 
-    if user.reg_num != 602610001141000:
+    if user.reg_num != "602610001141000":
         return redirect('profile')
 
     if request.method == "POST":
