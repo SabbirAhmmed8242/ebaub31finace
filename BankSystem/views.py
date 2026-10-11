@@ -12,33 +12,75 @@ def Home(request):
         'logged_in': logged_in
     })
 
+import logging
+logger = logging.getLogger(__name__)
+
 def profile(request):
     if 'user_id' not in request.session:
         return redirect('Login')
 
-    
-    user_id = request.session.get('user_id')
-    user = Reg_Log_information.objects.get(id = user_id)
-    reg = user.reg_num
-    print(user)
-    if str(user.reg_num) != "6026100001141000":
+    try:
+        user_id = request.session.get('user_id')
+        user = Reg_Log_information.objects.get(id=user_id)
+
         registration = user.reg_num
-        BalanceData = Balance.objects.get(reg = registration)
-        ProfileData = Profile.objects.get(reg_num = registration)
-        Mobile = ProfileData.mobile
+
+        if str(registration) == "6026100001141000":
+            return redirect('adminpage')
+
+        # একজন ব্যবহারকারীর Balance record একাধিক হলে প্রথমটি নেবে
+        BalanceData = Balance.objects.filter(
+            reg=registration
+        ).first()
+
+        if BalanceData is None:
+            return render(request, "Profile.html", {
+                'error': 'এই account-এর Balance record পাওয়া যায়নি।',
+                'activities': Details.objects.filter(
+                    reg=registration
+                ).order_by('-DaT')
+            })
+
+        ProfileData = Profile.objects.filter(
+            reg_num=registration
+        ).first()
+
+        if ProfileData is None:
+            return render(request, "Profile.html", {
+                'error': 'এই account-এর Profile record পাওয়া যায়নি।',
+                'activities': Details.objects.filter(
+                    reg=registration
+                ).order_by('-DaT')
+            })
+
         if request.method == "POST":
-                Ammount = request.POST.get('Amount')
-                # Mobile = int(request.POST.get('MobileNo'))
-                TypeOf = request.POST.get('TypeOf')
-        
+            amount = request.POST.get('Amount')
+            type_of = request.POST.get('TypeOf')
+
+            if amount and type_of:
                 RequestaRgWi.objects.create(
-                    Reg = registration,
-                    Mobile = Mobile,
-                    TypeOf = TypeOf,
-                    Ammount = Ammount
+                    Reg=registration,
+                    Mobile=ProfileData.mobile,
+                    TypeOf=type_of,
+                    Ammount=amount
                 )
-    else:
-         return redirect('adminpage')
+
+                return redirect('profile')
+
+        details = Details.objects.filter(
+            reg=registration
+        ).order_by('-DaT')
+
+        return render(request, "Profile.html", {
+            'BalanceData': BalanceData,
+            'ProfileData': ProfileData,
+            'activities': details
+        })
+
+    except Exception:
+        logger.exception("Error occurred in profile view")
+        raise
+
 
     details = Details.objects.filter(reg=registration).order_by('-DaT')
 
