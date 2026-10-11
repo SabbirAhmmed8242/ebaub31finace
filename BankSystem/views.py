@@ -228,7 +228,7 @@ def Admin(request):
 
     user = Reg_Log_information.objects.get(id=user_id)
 
-    if user.reg_num != "602610001141000":
+    if str(user.reg_num) != "602610001141000":
         return redirect('profile')
 
     if request.method == "POST":
