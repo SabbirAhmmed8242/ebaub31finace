@@ -79,46 +79,50 @@ logger = logging.getLogger(__name__)
 
     # return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
 
+
 def profile(request):
     if 'user_id' not in request.session:
         return redirect('Login')
 
-    try:
-        user_id = request.session.get('user_id')
-        user = Reg_Log_information.objects.get(id=user_id)
+    user_id = request.session.get('user_id')
+    user = Reg_Log_information.objects.get(id=user_id)
+    registration = user.reg_num
 
-        registration = user.reg_num
+    if request.method == "POST":
+        amount = request.POST.get('Amount')
+        type_of = request.POST.get('TypeOf')
 
-        if registration == "602610001141000":
-            return redirect('adminpage')
+        if amount and type_of:
+            RequestaRgWi.objects.create(
+                Reg=registration,
+                Mobile=user.mobile,
+                TypeOf=type_of,
+                Ammount=amount
+            )
+            return redirect('profile')
 
-        if request.method == "POST":
-            amount = request.POST.get('Amount')
-            type_of = request.POST.get('TypeOf')
+    BalanceData = Balance.objects.filter(
+        reg=registration
+    ).first()
 
-            if amount and type_of:
-                RequestaRgWi.objects.create(
-                    Reg=registration,
-                    Mobile=user.mobile,
-                    TypeOf=type_of,
-                    Ammount=amount
-                )
+    ProfileData = Profile.objects.filter(
+        reg_num=registration
+    ).first()
 
-                return redirect('profile')
+    details = Details.objects.filter(
+        reg=registration
+    ).order_by('-DaT')
 
-        BalanceData = Balance.objects.filter(
-            reg=registration).first()
-        ProfileData = Profile.objects.filter(
-            reg_num=registration).first()
+    print("Registration:", registration)
+    print("BalanceData:", BalanceData)
+    print("ProfileData:", ProfileData)
 
-        return render(request, "Profile.html", {
-            'BalanceData': BalanceData,
-            'ProfileData': ProfileData
-        })
+    return render(request, "Profile.html", {
+        'BalanceData': BalanceData,
+        'ProfileData': ProfileData,
+        'activities': details
+    })
 
-    except Exception:
-        logger.exception("Error occurred in profile view")
-        raise
 
 import logging
 logger = logging.getLogger(__name__)
