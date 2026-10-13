@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.db import transaction, IntegrityError, DatabaseError
 from django.contrib.auth.hashers import make_password,check_password
 from django.db.models import F
+from django.contrib import messages
 from accounts_admin_databaseSide.models import Details,Profile,Reg_Log_information,Balance,Details,RequestaRgWi
 
 def Home(request):
