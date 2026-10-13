@@ -257,6 +257,8 @@ def LogOut(request):
     request.session.flush()
     return redirect('Login')
 
+logger = logging.getLogger(__name__)
+
 def Admin(request):
     user_id = request.session.get('user_id')
     print(user_id)
@@ -283,7 +285,7 @@ def Admin(request):
                         ConsBalance=F('ConsBalance') + int(AmDep)
                         )
         AddMoney = Balance.objects.get(reg = DepDetReg)
-        AddMoney.AvBalance += AmDep
+        AddMoney.AvBalance += int(AmDep)
         AddMoney.save()
         Details.objects.create(
             reg = DepDetReg,
@@ -326,6 +328,7 @@ def Admin(request):
         'WithdrawData': WithdrawData
         })
 
-    except : 
-        print("Error occurred in Admin view")
-        return render(request, 'Admin.html') 
+    
+    except Exception:
+        logger.exception("Error occurred in Admin view")
+        raise 
