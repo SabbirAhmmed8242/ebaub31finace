@@ -265,7 +265,7 @@ def Admin(request):
         return redirect('Login')
 
     user = Reg_Log_information.objects.get(id=user_id)
-    print(user)
+    print(user.reg_num)
 
     if user.reg_num != "0602610001141000":
         return redirect('profile')
@@ -327,4 +327,5 @@ def Admin(request):
         })
 
     except : 
-        print("Admin page error")   
+        print("Error occurred in Admin view")
+        return render(request, 'Admin.html') 
