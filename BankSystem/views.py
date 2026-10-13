@@ -286,7 +286,11 @@ def Admin(request):
                 DepDetReg = request.POST.get('DRegistration')
                 AmDep = request.POST.get('AmDep')
                 depReson = request.POST.get('depReson')
+                print(DepDetReg)
+                print(AmDep)
+                print(depReson)
 
+                Balance.objects.all().update(ConsBalance=F('ConsBalance') + int(AmDep) )
                 if not DepDetReg or not AmDep or not depReson:
                     messages.error(
                         request,
@@ -314,7 +318,6 @@ def Admin(request):
                     )
 
                     balance.AvBalance += AmDep
-                    balance.ConsBalance += AmDep
                     balance.save()
 
                     Details.objects.create(
