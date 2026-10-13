@@ -259,13 +259,15 @@ def LogOut(request):
 
 def Admin(request):
     user_id = request.session.get('user_id')
+    print(user_id)
 
     if not user_id:
         return redirect('Login')
 
     user = Reg_Log_information.objects.get(id=user_id)
+    print(user)
 
-    if str(user.reg_num) != "0602610001141000":
+    if user.reg_num != "0602610001141000":
         return redirect('profile')
 
     try:
@@ -314,7 +316,7 @@ def Admin(request):
             request_id = request.POST.get('request_id')
             RequestaRgWi.objects.filter(id=request_id).delete()
 
-        return redirect('adminpage')
+            return redirect('adminpage')
 
         WithdrawData = RequestaRgWi.objects.all()
         data = Balance.objects.all()
