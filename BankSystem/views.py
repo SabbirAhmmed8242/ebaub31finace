@@ -268,12 +268,13 @@ def Admin(request):
     if str(user.reg_num) != "0602610001141000":
         return redirect('profile')
 
-    if request.method == "POST":
-        action = request.POST.get('action')
-        ammount = request.POST.get('ammount')
+    try:
+        if request.method == "POST":
+            action = request.POST.get('action')
+            ammount = request.POST.get('ammount')
 
-        DepDetReg = int(request.POST.get('DRegistration'))
-        AmDep = int(request.POST.get('AmDep'))
+        DepDetReg = request.POST.get('DRegistration')
+        AmDep = request.POST.get('AmDep')
         depReson = request.POST.get('depReson')
 
         Balance.objects.update(
@@ -315,10 +316,13 @@ def Admin(request):
 
         return redirect('adminpage')
 
-    WithdrawData = RequestaRgWi.objects.all()
-    data = Balance.objects.get(reg=602610001141000)
+        WithdrawData = RequestaRgWi.objects.all()
+        data = Balance.objects.all()
 
-    return render(request, 'Admin.html', {
+        return render(request, 'Admin.html', {
         'data': data,
         'WithdrawData': WithdrawData
-    })
+        })
+
+    except : 
+        print("Admin page error")   
