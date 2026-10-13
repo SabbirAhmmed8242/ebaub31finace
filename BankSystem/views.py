@@ -282,7 +282,7 @@ def Admin(request):
             # ==================================
             # 1. DEPOSIT
             # ==================================
-            if action == 'deposit':
+            if action == 'add':
                 DepDetReg = request.POST.get('DRegistration')
                 AmDep = request.POST.get('AmDep')
                 depReson = request.POST.get('depReson')
