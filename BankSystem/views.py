@@ -259,76 +259,170 @@ def LogOut(request):
 
 logger = logging.getLogger(__name__)
 
+
 def Admin(request):
     user_id = request.session.get('user_id')
-    print(user_id)
 
     if not user_id:
         return redirect('Login')
 
-    user = Reg_Log_information.objects.get(id=user_id)
-    print(user.reg_num)
-
-    if user.reg_num != "0602610001141000":
-        return redirect('profile')
-
     try:
+        user = Reg_Log_information.objects.get(id=user_id)
+
+        # Admin registration number
+        ADMIN_REG = "0602610001141000"
+
+        if str(user.reg_num).strip() != ADMIN_REG:
+            return redirect('profile')
+
         if request.method == "POST":
             action = request.POST.get('action')
-            ammount = request.POST.get('ammount')
 
-        DepDetReg = request.POST.get('DRegistration')
-        AmDep = request.POST.get('AmDep')
-        depReson = request.POST.get('depReson')
+            # ==================================
+            # 1. DEPOSIT
+            # ==================================
+            if action == 'deposit':
+                DepDetReg = request.POST.get('DRegistration')
+                AmDep = request.POST.get('AmDep')
+                depReson = request.POST.get('depReson')
 
-        Balance.objects.update(
-                        ConsBalance=F('ConsBalance') + int(AmDep)
-                        )
-        AddMoney = Balance.objects.get(reg = DepDetReg)
-        AddMoney.AvBalance += int(AmDep)
-        AddMoney.save()
-        Details.objects.create(
-            reg = DepDetReg,
-            reason = depReson
-        )
+                if not DepDetReg or not AmDep or not depReson:
+                    messages.error(
+                        request,
+                        "Please fill in all deposit fields."
+                    )
+                    return redirect('adminpage')
 
+                try:
+                    AmDep = int(AmDep)
+                except (ValueError, TypeError):
+                    messages.error(request, "Invalid deposit amount.")
+                    return redirect('adminpage')
 
-        # 1. Recharge request confirm
-        if action == 'confrirm':
-            request_id = request.POST.get('request_id')
-            Balance.objects.update(
-                ConsBalance=F('ConsBalance') - int(ammount)
-                )
+                if AmDep <= 0:
+                    messages.error(
+                        request,
+                        "Deposit amount must be greater than zero."
+                    )
+                    return redirect('adminpage')
 
-            with transaction.atomic():
-                recharge = RequestaRgWi.objects.get(id=request_id)
-                balance = Balance.objects.get(reg=recharge.Reg)
+                with transaction.atomic():
+                    # Update only the selected user's balance
+                    balance = Balance.objects.select_for_update().get(
+                        reg=DepDetReg
+                    )
 
-                amount = recharge.Ammount
-
-                if balance.AvBalance < amount:
-                    pass
-                else:
-                    balance.AvBalance -= amount
+                    balance.AvBalance += AmDep
+                    balance.ConsBalance += AmDep
                     balance.save()
-                    recharge.delete()
 
-        # 2. Recharge request delete
-        elif action == 'delete':
-            request_id = request.POST.get('request_id')
-            RequestaRgWi.objects.filter(id=request_id).delete()
+                    Details.objects.create(
+                        reg=DepDetReg,
+                        reason=depReson
+                    )
+
+                messages.success(request, "Deposit successful.")
+
+            # ==================================
+            # 2. RECHARGE REQUEST CONFIRM
+            # ==================================
+            elif action == 'confirm':
+                request_id = request.POST.get('request_id')
+
+                if not request_id:
+                    messages.error(
+                        request,
+                        "Recharge request ID is missing."
+                    )
+                    return redirect('adminpage')
+
+                with transaction.atomic():
+                    recharge = RequestaRgWi.objects.select_for_update().get(
+                        id=request_id
+                    )
+
+                    balance = Balance.objects.select_for_update().get(
+                        reg=recharge.Reg
+                    )
+
+                    amount = recharge.Ammount
+
+                    if amount <= 0:
+                        messages.error(
+                            request,
+                            "Invalid recharge amount."
+                        )
+                    elif balance.AvBalance < amount:
+                        messages.error(
+                            request,
+                            "Insufficient available balance."
+                        )
+                    else:
+                        balance.AvBalance -= amount
+                        balance.save(update_fields=['AvBalance'])
+
+                        recharge.delete()
+
+                        messages.success(
+                            request,
+                            "Recharge request confirmed."
+                        )
+
+            # ==================================
+            # 3. RECHARGE REQUEST DELETE
+            # ==================================
+            elif action == 'delete':
+                request_id = request.POST.get('request_id')
+
+                if request_id:
+                    deleted, _ = RequestaRgWi.objects.filter(
+                        id=request_id
+                    ).delete()
+
+                    if deleted:
+                        messages.success(
+                            request,
+                            "Recharge request deleted."
+                        )
+                    else:
+                        messages.error(
+                            request,
+                            "Recharge request not found."
+                        )
+                else:
+                    messages.error(
+                        request,
+                        "Recharge request ID is missing."
+                    )
+
+            else:
+                messages.error(request, "Invalid action.")
 
             return redirect('adminpage')
 
-        WithdrawData = RequestaRgWi.objects.all()
+        # ==================================
+        # GET: SHOW ADMIN PAGE
+        # ==================================
+        WithdrawData = RequestaRgWi.objects.all().order_by('id')
         data = Balance.objects.all()
 
         return render(request, 'Admin.html', {
-        'data': data,
-        'WithdrawData': WithdrawData
+            'data': data,
+            'WithdrawData': WithdrawData
         })
 
-    
+    except (
+        Reg_Log_information.DoesNotExist,
+        Balance.DoesNotExist,
+        RequestaRgWi.DoesNotExist,
+    ):
+        logger.exception("Required database record not found in Admin view")
+        return render(request, 'Admin.html', {
+            'data': Balance.objects.none(),
+            'WithdrawData': RequestaRgWi.objects.none(),
+            'error': 'Required account or balance record was not found.'
+        })
+
     except Exception:
-        logger.exception("Error occurred in Admin view")
-        raise 
+        logger.exception("Unexpected error in Admin view")
+        raise
