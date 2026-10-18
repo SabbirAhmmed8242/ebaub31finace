@@ -265,6 +265,11 @@ def Admin(request):
                 ExDetReg = request.POST.get('Exegistration', '').strip()
                 AmEx = request.POST.get('AmEx', '').strip()
                 ExpReson = request.POST.get('ExReson', '').strip()
+                Details.objects.create(
+                                            reg=ExDetReg,
+                                            ammount=amount,
+                                            reason=ExpReson
+                                        )
 
                 Balance.objects.all().update(ConsBalance=F('ConsBalance') - int(AmEx) )
 
@@ -295,11 +300,7 @@ def Admin(request):
                         balance.AvBalance -= amount
                         balance.save(update_fields=['AvBalance'])
 
-                        Details.objects.create(
-                            reg=ExDetReg,
-                            ammount=amount,
-                            reason=ExpReson
-                        )
+                        
 
                     messages.success(request, "Deduct successful.")
 
