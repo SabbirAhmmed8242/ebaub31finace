@@ -406,14 +406,10 @@
         <!-- ADD MONEY -->
 
         <div class="col-lg-6">
-
             <div class="section-card">
-
                 <div class="section-title text-success">
-
                     <i class="bi bi-plus-circle"></i>
                     Add Money
-
                 </div>
 
                 <form method="POST">
@@ -423,11 +419,26 @@
                         <label class="form-label">
                             Registration Number
                         </label>
-
-                        <input type="text"
-                               class="form-control"
-                               name="DRegistration"
-                               placeholder="Enter registration number">
+                        
+                        <select
+                            class="form-control"
+                            name="DRegistration"
+                            required>
+                            <option value="" selected disabled>Enter registration number</option>
+                            <option value="0602610001141001">0602610001141001</option>
+                            <option value="0602610001141002">0602610001141002</option>
+                            <option value="0602610001141004">0602610001141004</option>
+                            <option value="0602610001141006">0602610001141006</option>
+                            <option value="0602610001141008">0602610001141008</option>
+                            <option value="0602610001141009">0602610001141009</option>
+                            <option value="0602610001141012">0602610001141012</option>
+                            <option value="0602610001141013">0602610001141013</option>
+                            <option value="0602610001141014">0602610001141014</option>
+                            <option value="0602610001141015">0602610001141015</option>
+                            <option value="0602610001141016">0602610001141016</option>
+                            <option value="0602610001141017">0602610001141017</option>
+                            <option value="0602610001141018">0602610001141018</option>
+                        </select>
 
                     </div>
 
@@ -496,17 +507,33 @@
                 <form method="POST">
                     {% csrf_token %}
 
+                    
                     <div class="mb-3">
                         <label class="form-label">
                             Registration Number
                         </label>
 
-                        <input type="text"
+                        <select
                             class="form-control"
                             name="Exegistration"
-                            placeholder="Enter registration number"
                             required>
+                            <option value="" selected disabled>Enter registration number</option>
+                            <option value="0602610001141001">0602610001141001</option>
+                            <option value="0602610001141002">0602610001141002</option>
+                            <option value="0602610001141004">0602610001141004</option>
+                            <option value="0602610001141006">0602610001141006</option>
+                            <option value="0602610001141008">0602610001141008</option>
+                            <option value="0602610001141009">0602610001141009</option>
+                            <option value="0602610001141012">0602610001141012</option>
+                            <option value="0602610001141013">0602610001141013</option>
+                            <option value="0602610001141014">0602610001141014</option>
+                            <option value="0602610001141015">0602610001141015</option>
+                            <option value="0602610001141016">0602610001141016</option>
+                            <option value="0602610001141017">0602610001141017</option>
+                            <option value="0602610001141018">0602610001141018</option>
+                        </select>
                     </div>
+
 
                     <div class="mb-3">
                         <label class="form-label">
