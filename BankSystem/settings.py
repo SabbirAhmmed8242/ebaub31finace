@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     "ebaub31finace-ch3d-enpp5jhv1-ebaub-31.vercel.app",
     "ebaub31finace-ch3d.vercel.app",
     "baub31finace-ch3d.vercel.app",
+    "ebaub31finace-ch3d-git-main-ebaub-31.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [

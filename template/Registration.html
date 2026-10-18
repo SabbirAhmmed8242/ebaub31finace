@@ -343,6 +343,69 @@
 
 <body>
 
+    
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark"
+        style="background: #004d2d; position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;">
+
+        <div class="container-fluid px-4">
+
+            <!-- Brand -->
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="bi bi-bank2 me-2"></i>
+                EXIM BANK
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{url 'Home'}}">
+                            <i class="bi bi-house-door me-1"></i>
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#contact">
+                            <i class="bi bi-telephone me-1"></i>
+                            Contact
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-light fw-bold px-4"
+                        style="color: #00843d; border-radius: 8px;"
+                        href="{% url 'Login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            Login
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
 
     <div class="register-wrapper">
 
@@ -483,25 +546,41 @@
 
 
 
+                        
                         <!-- Registration Number -->
 
                         <label class="form-label">
                             Registration Number
                         </label>
 
-
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-card-text"></i>
                             </span>
 
-                            <input
-                                type="number"
-                                class="form-control"
-                                placeholder="Enter your registration number"
+                            <select
+                                class="form-select"
                                 name="Registration"
                                 required>
+                                <option value="" selected disabled>
+                                    Select your registration number
+                                </option>
+                                <option value="0602610001141001">0602610001141001</option>
+                                <option value="0602610001141002">0602610001141002</option>
+                                <option value="0602610001141004">0602610001141004</option>
+                                <option value="0602610001141006">0602610001141006</option>
+                                <option value="0602610001141008">0602610001141008</option>
+                                <option value="0602610001141009">0602610001141009</option>
+                                <option value="0602610001141012">0602610001141012</option>
+                                <option value="0602610001141013">0602610001141013</option>
+                                <option value="0602610001141014">0602610001141014</option>
+                                <option value="0602610001141015">0602610001141015</option>
+                                <option value="0602610001141016">0602610001141016</option>
+                                <option value="0602610001141017">0602610001141017</option>
+                                <option value="0602610001141018">0602610001141018</option>
+                            </select>
                         </div>
+
                         
                         <label class="form-label">
                             Mobile Number
