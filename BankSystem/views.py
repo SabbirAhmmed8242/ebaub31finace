@@ -273,11 +273,12 @@ def Admin(request):
                             reg=ExDetReg
                             )
                 
-                        balance.AvBalance -= AmEx
+                        balance.AvBalance -= int(AmEx)
                         balance.save()
                 
                         Details.objects.create(
                             reg=ExDetReg,
+                            ammount = int(AmEx),
                             reason=ExpReson
                         )
             
