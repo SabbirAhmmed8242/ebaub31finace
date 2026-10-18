@@ -385,7 +385,7 @@
                     <input type="hidden" name="request_id" value="{{ Withdraw.id }}">
                     <input type="hidden" name="reg" value="{{ Withdraw.Reg }}">
                     <input type="hidden" name="ammount" value="{{ Withdraw.Ammount }}">
-                    <button type="submit" name="action" value="confrirm" class="btn btn-success btn-sm">Confirm</button>
+                    <button type="submit" name="action" value="confirm" class="btn btn-success btn-sm">Confirm</button>
                     <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm">Delete</button>
                 </form>
             </td>
@@ -486,80 +486,69 @@
         <!-- EXPENSE -->
 
         <div class="col-lg-6">
-
             <div class="section-card">
 
                 <div class="section-title text-danger">
-
                     <i class="bi bi-dash-circle"></i>
                     Money Expense
-
                 </div>
 
-                <form>
+                <form method="POST">
                     {% csrf_token %}
 
                     <div class="mb-3">
-
                         <label class="form-label">
                             Registration Number
                         </label>
 
                         <input type="text"
-                               class="form-control"
-                               name="Exegistration"
-                               placeholder="Enter registration number">
-
+                            class="form-control"
+                            name="Exegistration"
+                            placeholder="Enter registration number"
+                            required>
                     </div>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Amount
                         </label>
 
                         <div class="input-group">
-
-                            <span class="input-group-text">
-                                ৳
-                            </span>
+                            <span class="input-group-text">৳</span>
 
                             <input type="number"
-                                   class="form-control"
-                                   name="AmEx"
-                                   placeholder="Enter expense amount">
+                                class="form-control"
+                                name="AmEx"
+                                placeholder="Enter expense amount"
+                                min="1"
+                                step="1"
+                                required>
                         </div>
-
                     </div>
 
-
                     <div class="mb-3">
-
                         <label class="form-label">
                             Expense Reason
                         </label>
 
                         <textarea class="form-control"
-                                  rows="3"
-                                  name="ExReson"
-                                  placeholder="Why was the money spent?"></textarea>
-
+                                rows="3"
+                                name="ExReson"
+                                placeholder="Why was the money spent?"
+                                required></textarea>
                     </div>
 
-
-                    <button class="btn btn-danger name='action' value='deduct' w-100">
+                    <button type="submit"
+                            name="action"
+                            value="deduct"
+                            class="btn btn-danger w-100">
 
                         <i class="bi bi-dash-lg"></i>
                         Deduct Money
                     </button>
-
                 </form>
-
             </div>
-
         </div>
-
     </div>
 
 
