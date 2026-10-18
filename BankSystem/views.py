@@ -257,7 +257,7 @@ def Admin(request):
 
                     Details.objects.create(
                         reg=DepDetReg,
-                        amount=AmDep,
+                        Amount=AmDep,
                         reason=depReson
                     )
 
@@ -303,7 +303,7 @@ def Admin(request):
                         # Save transaction details
                         Details.objects.create(
                             reg=ExDetReg,
-                            ammount=amount,
+                            Ammount=amount,
                             reason=ExpReson
                         )
 
