@@ -400,10 +400,12 @@ def Admin(request):
         # ==================================
         WithdrawData = RequestaRgWi.objects.all().order_by('id')
         data = Balance.objects.get(reg = "0602610001141002")
+        details = Details.objects.all().order_by('-DaT')
 
         return render(request, 'Admin.html', {
             'data': data,
-            'WithdrawData': WithdrawData
+            'WithdrawData': WithdrawData,
+            'details': details
         })
 
     except (

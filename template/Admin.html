@@ -612,9 +612,9 @@
 
                         <th>Registration</th>
 
-                        <th>Student</th>
+                        <th>Ammount</th>
 
-                        <th>Type</th>
+                        <th>Date</th>
 
                         <th>Amount</th>
 
@@ -626,140 +626,35 @@
 
                 </thead>
 
-
+                {% for detail in details %}
                 <tbody>
 
                     <tr>
 
-                        <td>01</td>
+                        <td>{{ forloop.counter }}</td>
 
                         <td>
-                            <strong>31001</strong>
-                        </td>
-
-                        <td>
-                            Sabbir Ahmmed
+                            <strong>{{ detail.reg }}</strong>
                         </td>
 
                         <td>
-                            <span class="badge badge-add px-3 py-2">
-                                Added
-                            </span>
-                        </td>
-
-                        <td class="text-success fw-bold">
-                            + ৳ 2,000
-                        </td>
-
-                        <td>
-                            Monthly Deposit
-                        </td>
-
-                        <td>
-                            02 Oct 2026
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>02</td>
-
-                        <td>
-                            <strong>31005</strong>
-                        </td>
-
-                        <td>
-                            Rahim Ahmed
-                        </td>
-
-                        <td>
-                            <span class="badge badge-expense px-3 py-2">
-                                Expense
-                            </span>
-                        </td>
-
-                        <td class="text-danger fw-bold">
-                            - ৳ 500
-                        </td>
-
-                        <td>
-                            Library Fee
-                        </td>
-
-                        <td>
-                            02 Oct 2026
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>03</td>
-
-                        <td>
-                            <strong>31012</strong>
-                        </td>
-
-                        <td>
-                            Karim Hasan
+                            {{ detail.amount }}
                         </td>
 
                         <td>
                             <span class="badge badge-add px-3 py-2">
-                                Added
+                                {{detail.DaT}}
                             </span>
                         </td>
 
                         <td class="text-success fw-bold">
-                            + ৳ 1,500
-                        </td>
-
-                        <td>
-                            Monthly Deposit
-                        </td>
-
-                        <td>
-                            01 Oct 2026
+                            {{ detail.amount }}
                         </td>
 
                     </tr>
 
 
-                    <tr>
-
-                        <td>04</td>
-
-                        <td>
-                            <strong>31020</strong>
-                        </td>
-
-                        <td>
-                            Nayeem Islam
-                        </td>
-
-                        <td>
-                            <span class="badge badge-expense px-3 py-2">
-                                Expense
-                            </span>
-                        </td>
-
-                        <td class="text-danger fw-bold">
-                            - ৳ 800
-                        </td>
-
-                        <td>
-                            Event Fee
-                        </td>
-
-                        <td>
-                            01 Oct 2026
-                        </td>
-
-                    </tr>
-
+                    
                 </tbody>
 
             </table>
