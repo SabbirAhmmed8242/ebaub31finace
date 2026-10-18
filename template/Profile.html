@@ -1090,21 +1090,54 @@
         </p>
         {% if activities %}
             {% for activity in activities %}
-            <div class="activity-item">
-                <div class="activity-left">
-                    <div class="activity-icon">
-                        <i class="bi bi-arrow-down-circle-fill"></i>
-                    </div>
-                    <div>
-                        <div class="activity-title">
-                            {{ activity.reason }}
-                        </div>
-                        <div class="activity-date">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Sl No.</th>
+
+                        <th>Details</th>
+
+                        <th>Date</th>
+
+                        <th>Amount</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>{{forloop.counter}}</td>
+
+                        <td>
+                            <strong>{{ activity.reason }}</strong>
+                        </td>
+
+                        <td>
                             {{ activity.DaT }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </td>
+
+                        <td>
+                            <span class="badge badge-add px-3 py-2">
+                                {{ activity.amount }}
+                            </span>
+                        </td>
+
+        
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
             {% endfor %}
         {% else %}
 
