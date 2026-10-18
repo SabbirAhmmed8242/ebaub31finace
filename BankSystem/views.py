@@ -16,70 +16,6 @@ def Home(request):
 import logging
 logger = logging.getLogger(__name__)
 
-# def profile(request):
-#     if 'user_id' not in request.session:
-#         return redirect('Login')
-
-#     try:
-#         user_id = request.session.get('user_id')
-#         user = Reg_Log_information.objects.get(id=user_id)
-
-#         registration = user.reg_num
-
-#         if str(registration) == "602610001141000":
-#             return redirect('adminpage')
-
-#         # একজন ব্যবহারকারীর Balance record একাধিক হলে প্রথমটি নেবে
-#         BalanceData = Balance.objects.filter(
-#             reg=registration
-#         ).first()
-
-        # if BalanceData is None:
-        #     return render(request, "Profile.html", {
-        #         'error': 'এই account-এর Balance record পাওয়া যায়নি।',
-        #         'activities': Details.objects.filter(
-        #             reg=registration
-        #         ).order_by('-DaT')
-        # })
-
-    #     ProfileData = Profile.objects.filter(
-    #         reg_num=registration
-    #     ).first()
-
-
-    #     if request.method == "POST":
-    #         amount = request.POST.get('Amount')
-    #         type_of = request.POST.get('TypeOf')
-
-    #         if amount and type_of:
-    #             RequestaRgWi.objects.create(
-    #                 Reg=registration,
-    #                 Mobile=ProfileData.mobile,
-    #                 TypeOf=type_of,
-    #                 Ammount=amount
-    #             )
-
-    #             return redirect('profile')
-
-    #     details = Details.objects.filter(
-    #         reg=registration
-    #     ).order_by('-DaT')
-
-    #     return render(request, "Profile.html", {
-    #         'BalanceData': BalanceData,
-    #         'ProfileData': ProfileData,
-    #         'activities': details
-    #     })
-
-    # except Exception:
-    #     logger.exception("Error occurred in profile view")
-    #     raise
-
-
-    # details = Details.objects.filter(reg=registration).order_by('-DaT')
-
-    # return render(request, "Profile.html",{'BalanceData' : BalanceData, 'ProfileData' : ProfileData,'activities': details})
-
 
 def profile(request):
     if 'user_id' not in request.session:
@@ -251,7 +187,7 @@ def Login(request):
             request.session['user_id'] = user.id
             return redirect('profile')
         else:
-            return redirect('Home')
+            return redirect('errpage')
     return render(request, 'Login.html')
 
 def LogOut(request):
@@ -430,3 +366,6 @@ def Admin(request):
     except Exception:
         logger.exception("Unexpected error in Admin view")
         raise
+
+def errpage(request):
+    return render(request, 'ErrPage.html')

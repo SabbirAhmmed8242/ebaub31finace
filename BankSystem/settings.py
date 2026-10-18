@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local-development-key-change-before-deploy')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
     "ebaub31finace-mzdf.vercel.app",
