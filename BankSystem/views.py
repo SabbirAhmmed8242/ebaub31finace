@@ -257,6 +257,7 @@ def Admin(request):
 
                     Details.objects.create(
                         reg=DepDetReg,
+                        amount=AmDep,
                         reason=depReson
                     )
 
