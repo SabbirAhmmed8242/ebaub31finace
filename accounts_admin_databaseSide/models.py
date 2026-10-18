@@ -24,6 +24,7 @@ class Balance(models.Model):
 class Details(models.Model):
     reg = models.CharField(max_length = 35)
     DaT = models.DateField(auto_now_add=True)
+    amount = models.CharField(max_length=20)
     reason = models.CharField(max_length = 256)
 
 class RequestaRgWi(models.Model):

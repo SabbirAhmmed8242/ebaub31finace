@@ -50,9 +50,6 @@ def profile(request):
         reg=registration
     ).order_by('-DaT')
 
-    print("Registration:", registration)
-    print("BalanceData:", BalanceData)
-    print("ProfileData:", ProfileData)
 
     return render(request, "Profile.html", {
         'BalanceData': BalanceData,
@@ -262,6 +259,29 @@ def Admin(request):
                     )
 
                 messages.success(request, "Deposit successful.")
+            elif action == 'deduct':
+                    ExDetReg = request.POST.get('Exegistration')
+                    AmEx = request.POST.get('AmEx')
+                    ExpReson = request.POST.get('ExReson')
+                
+                    Balance.objects.all().update(ConsBalance=F('ConsBalance') + int(AmDep) )
+                            
+                
+                    with transaction.atomic():
+                        # Update only the selected user's balance
+                        balance = Balance.objects.select_for_update().get(
+                            reg=ExDetReg
+                            )
+                
+                        balance.AvBalance -= AmEx
+                        balance.save()
+                
+                        Details.objects.create(
+                            reg=ExDetReg,
+                            reason=ExpReson
+                        )
+            
+                        messages.success(request, "Deduct successful.")
 
             # ==================================
             # 2. RECHARGE REQUEST CONFIRM
@@ -344,7 +364,7 @@ def Admin(request):
         # GET: SHOW ADMIN PAGE
         # ==================================
         WithdrawData = RequestaRgWi.objects.all().order_by('id')
-        data = Balance.objects.all()
+        data = Balance.objects.get(reg = "0602610001141002")
 
         return render(request, 'Admin.html', {
             'data': data,
