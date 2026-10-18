@@ -264,7 +264,7 @@ def Admin(request):
                     AmEx = request.POST.get('AmEx')
                     ExpReson = request.POST.get('ExReson')
                 
-                    Balance.objects.all().update(ConsBalance=F('ConsBalance') + int(AmDep) )
+                    Balance.objects.all().update(ConsBalance=F('ConsBalance') - int(AmEx) )
                             
                 
                     with transaction.atomic():
@@ -278,7 +278,7 @@ def Admin(request):
                 
                         Details.objects.create(
                             reg=ExDetReg,
-                            ammount = int(AmEx),
+                            ammount = AmEx,
                             reason=ExpReson
                         )
             
