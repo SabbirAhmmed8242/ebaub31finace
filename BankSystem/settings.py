@@ -29,9 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'local-development-key-change-b
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get('DJANGO_ALLOWED_HOSTS', 'ebaub31finace-f5vp4ng4y-ebaub-31.vercel.app').split(',')
-    if host.strip()
+    "ebaub31finace-mzdf.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
