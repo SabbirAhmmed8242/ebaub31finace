@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import login
@@ -260,29 +262,55 @@ def Admin(request):
 
                 messages.success(request, "Deposit successful.")
             elif action == 'deduct':
-                    ExDetReg = request.POST.get('Exegistration')
-                    AmEx = request.POST.get('AmEx')
-                    ExpReson = request.POST.get('ExReson')
-                
-                    Balance.objects.all().update(ConsBalance=F('ConsBalance') - int(AmEx) )
-                            
-                
+                ExDetReg = request.POST.get('Exegistration', '').strip()
+                AmEx = request.POST.get('AmEx', '').strip()
+                ExpReson = request.POST.get('ExReson', '').strip()
+
+                Balance.objects.all().update(ConsBalance=F('ConsBalance') - int(AmEx) )
+
+                if not ExDetReg or not AmEx or not ExpReson:
+                    messages.error(request, "Please fill in all fields.")
+                    return redirect('adminpage')
+
+                try:
+                    amount = int(AmEx)
+                except (ValueError, TypeError):
+                    messages.error(request, "Invalid amount.")
+                    return redirect('adminpage')
+
+                if amount <= 0:
+                    messages.error(request, "Amount must be greater than zero.")
+                    return redirect('adminpage')
+
+                try:
                     with transaction.atomic():
-                        # Update only the selected user's balance
                         balance = Balance.objects.select_for_update().get(
                             reg=ExDetReg
-                            )
-                
-                        balance.AvBalance -= int(AmEx)
-                        balance.save()
-                
+                        )
+
+                        if balance.AvBalance < amount:
+                            messages.error(request, "Insufficient balance.")
+                            return redirect('adminpage')
+
+                        balance.AvBalance -= amount
+                        balance.save(update_fields=['AvBalance'])
+
                         Details.objects.create(
                             reg=ExDetReg,
-                            ammount = AmEx,
+                            ammount=amount,
                             reason=ExpReson
                         )
-            
-                        messages.success(request, "Deduct successful.")
+
+                    messages.success(request, "Deduct successful.")
+
+                except Balance.DoesNotExist:
+                    messages.error(request, "Student balance not found.")
+
+                except Exception:
+                    logger.exception("Deduct operation failed")
+                    messages.error(request, "Deduction failed. Please check the server log.")
+
+                return redirect('adminpage')
 
             # ==================================
             # 2. RECHARGE REQUEST CONFIRM
