@@ -3,8 +3,8 @@ from django.db import models
 class Reg_Log_information(models.Model):
     name = models.CharField(max_length=35)
     UserName = models.CharField(max_length=35)
-    mobile = models.CharField()
-    reg_num = models.CharField()
+    mobile = models.CharField(max_length = 35)
+    reg_num = models.CharField(max_length = 35)
     batch = models.CharField(max_length=10)
     password = models.CharField(max_length=256)
 
