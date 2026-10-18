@@ -1089,56 +1089,365 @@
             Your latest account activities.
         </p>
         {% if activities %}
-            {% for activity in activities %}
+            
 
-            <table class="table table-hover align-middle">
+            <!-- TRANSACTION HISTORY -->
 
-                <thead>
+<div class="transaction-card">
 
-                    <tr>
+    <div class="transaction-header">
+        <div>
+            <span class="transaction-label">
+                <i class="bi bi-clock-history me-2"></i>
+                ACCOUNT ACTIVITY
+            </span>
 
-                        <th>Sl No.</th>
+            <h4 class="transaction-title">
+                Transaction History
+            </h4>
 
-                        <th>Details</th>
+            <p class="transaction-subtitle">
+                View your recent account activities and transactions.
+            </p>
+        </div>
 
-                        <th>Date</th>
+        <div class="transaction-icon">
+            <i class="bi bi-wallet2"></i>
+        </div>
+    </div>
 
-                        <th>Amount</th>
+    <div class="table-responsive">
 
-                    </tr>
+        <table class="table transaction-table align-middle mb-0">
 
-                </thead>
+            <thead>
+                <tr>
+                    <th>SL NO.</th>
+                    <th>TRANSACTION DETAILS</th>
+                    <th>DATE & TIME</th>
+                    <th class="text-end">AMOUNT</th>
+                </tr>
+            </thead>
 
+            <tbody>
 
-                <tbody>
+                {% for activity in activities %}
 
-                    <tr>
+                <tr>
+                    <td>
+                        <span class="serial-badge">
+                            {{ forloop.counter|stringformat:"02d" }}
+                        </span>
+                    </td>
 
-                        <td>{{forloop.counter}}</td>
+                    <td>
+                        <div class="activity-info">
+                            <div class="activity-icon">
+                                <i class="bi bi-receipt"></i>
+                            </div>
 
-                        <td>
-                            <strong>{{ activity.reason }}</strong>
-                        </td>
+                            <div>
+                                <div class="activity-name">
+                                    {{ activity.reason|default:"Transaction" }}
+                                </div>
 
-                        <td>
-                            {{ activity.DaT }}
-                        </td>
+                                <small class="activity-description">
+                                    Account transaction
+                                </small>
+                            </div>
+                        </div>
+                    </td>
 
-                        <td>
-                            <span class="badge badge-add px-3 py-2">
-                                {{ activity.amount }}
+                    <td>
+                        <div class="date-info">
+                            <i class="bi bi-calendar3"></i>
+
+                            <span>
+                                {{ activity.DaT|date:"d M Y" }}
                             </span>
-                        </td>
+                        </div>
 
-        
+                        <small class="time-info">
+                            {{ activity.DaT|date:"h:i A" }}
+                        </small>
+                    </td>
 
-                    </tr>
+                    <td class="text-end">
+                        <span class="amount-badge">
+                            <i class="bi bi-cash-coin me-1"></i>
+                            ৳ {{ activity.amount|default:activity.ammount }}
+                        </span>
+                    </td>
+                </tr>
 
+                {% empty %}
 
-                </tbody>
+                <tr>
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="bi bi-inbox"></i>
+                            </div>
 
-            </table>
-            {% endfor %}
+                            <h5>No Transactions Yet</h5>
+
+                            <p>
+                                Your transaction history will appear here.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="transaction-footer">
+        <i class="bi bi-shield-check me-2"></i>
+        Your account activity is displayed for your reference.
+    </div>
+
+</div>
+
+<style>
+    .transaction-card {
+        background: #ffffff;
+        border: 1px solid #e9eef4;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(16, 24, 40, 0.05);
+        margin: 25px 0;
+    }
+
+    .transaction-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 27px 30px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .transaction-label {
+        display: inline-block;
+        color: #00843d;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin-bottom: 9px;
+    }
+
+    .transaction-title {
+        color: #101828;
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 7px;
+    }
+
+    .transaction-subtitle {
+        color: #667085;
+        font-size: 13px;
+        margin-bottom: 0;
+        line-height: 1.7;
+    }
+
+    .transaction-icon {
+        width: 55px;
+        height: 55px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e8f7ef;
+        color: #00843d;
+        font-size: 25px;
+        border-radius: 16px;
+    }
+
+    .transaction-table {
+        min-width: 620px;
+    }
+
+    .transaction-table thead th {
+        background: #f8fafc;
+        color: #667085;
+        padding: 17px 22px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.7px;
+        border-bottom: 1px solid #eaecf0;
+        white-space: nowrap;
+    }
+
+    .transaction-table tbody td {
+        padding: 19px 22px;
+        border-bottom: 1px solid #f0f2f5;
+        color: #344054;
+    }
+
+    .transaction-table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+    .transaction-table tbody tr:hover {
+        background: #f8fcf9;
+    }
+
+    .transaction-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .serial-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 11px;
+        background: #f2f4f7;
+        color: #475467;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .activity-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 180px;
+    }
+
+    .activity-icon {
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #e8f7ef;
+        color: #00843d;
+        font-size: 19px;
+    }
+
+    .activity-name {
+        color: #101828;
+        font-size: 13px;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+    }
+
+    .activity-description {
+        display: inline-block;
+        color: #98a2b3;
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    .date-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .date-info i {
+        color: #00843d;
+        font-size: 14px;
+    }
+
+    .time-info {
+        display: block;
+        margin: 6px 0 0 22px;
+        color: #98a2b3;
+        font-size: 11px;
+    }
+
+    .amount-badge {
+        display: inline-block;
+        padding: 9px 13px;
+        background: #e8f7ef;
+        color: #00843d;
+        border: 1px solid #ccebd8;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 45px 15px;
+    }
+
+    .empty-icon {
+        font-size: 38px;
+        color: #98a2b3;
+        margin-bottom: 12px;
+    }
+
+    .empty-state h5 {
+        color: #344054;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .empty-state p {
+        color: #98a2b3;
+        font-size: 13px;
+        margin: 0;
+    }
+
+    .transaction-footer {
+        padding: 15px 25px;
+        background: #f8fafc;
+        border-top: 1px solid #edf0f4;
+        color: #667085;
+        font-size: 12px;
+    }
+
+    .transaction-footer i {
+        color: #00843d;
+    }
+
+    @media (max-width: 576px) {
+        .transaction-header {
+            padding: 22px 18px;
+        }
+
+        .transaction-title {
+            font-size: 20px;
+        }
+
+        .transaction-subtitle {
+            font-size: 12px;
+        }
+
+        .transaction-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 21px;
+        }
+
+        .transaction-table thead th,
+        .transaction-table tbody td {
+            padding: 15px;
+        }
+
+        .transaction-footer {
+            padding: 14px 17px;
+            line-height: 1.7;
+        }
+    }
+</style>
+
         {% else %}
 
             <div class="no-activity">
