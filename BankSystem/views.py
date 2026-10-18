@@ -289,22 +289,23 @@ def Admin(request):
                         balance = Balance.objects.select_for_update().get(
                             reg=ExDetReg
                         )
+                        amount = int(AmEx)
 
-                        Details.objects.create(
-                                         reg=ExDetReg,
-                                         ammount=AmEx,
-                                         reason=ExpReson
-                                         )
-
+                        # Check sufficient balance first
                         if balance.AvBalance < amount:
                             messages.error(request, "Insufficient balance.")
                             return redirect('adminpage')
-                    
 
+                        # Deduct amount
                         balance.AvBalance -= amount
                         balance.save(update_fields=['AvBalance'])
 
-                        
+                        # Save transaction details
+                        Details.objects.create(
+                            reg=ExDetReg,
+                            ammount=amount,
+                            reason=ExpReson
+                        )
 
                     messages.success(request, "Deduct successful.")
 
@@ -312,8 +313,8 @@ def Admin(request):
                     messages.error(request, "Student balance not found.")
 
                 except Exception:
-                    logger.exception("Deduct operation failed")
-                    messages.error(request, "Deduction failed. Please check the server log.")
+                    logger.exception("Deduction failed")
+                    messages.error(request, "Deduction failed. Check server logs.")
 
                 return redirect('adminpage')
 
