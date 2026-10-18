@@ -31,8 +31,9 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() == 'true'
 ALLOWED_HOSTS = [
     "ebaub31finace-mzdf.vercel.app",
     "baub31finace-ch3d-96jy02z64-ebaub-31.vercel.app",
-    "ebaub31finace-ch3d-enpp5jhv1-ebaub-31.vercel.app"
-    "ebaub31finace-ch3d.vercel.app"
+    "ebaub31finace-ch3d-enpp5jhv1-ebaub-31.vercel.app",
+    "ebaub31finace-ch3d.vercel.app",
+    "baub31finace-ch3d.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
