@@ -16,10 +16,10 @@ class Profile(models.Model):
     batch = models.CharField(max_length=10)
 
 class Balance(models.Model):
-    AvBalance = models.IntegerField()
-    ConsBalance = models.IntegerField()
-    reg = models.CharField(max_length = 35)
-    date = models.DateTimeField(auto_created=True)
+    AvBalance = models.DecimalField(max_digits=15, decimal_places=2)
+    ConsBalance = models.DecimalField(max_digits=15, decimal_places=2)
+    reg = models.CharField(max_length=35)
+    date = models.DateTimeField(auto_now_add=True)
 
 class Details(models.Model):
     reg = models.CharField(max_length = 35)
