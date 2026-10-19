@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password,check_password
 from django.db.models import F
 from django.contrib import messages
 from accounts_admin_databaseSide.models import Details,Profile,Reg_Log_information,Balance,Details,RequestaRgWi
-
+from decimal import Decimal
 def Home(request):
     logged_in = 'user_id' in request.session
     return render(request,'HomePage.html',{
@@ -225,7 +225,7 @@ def Admin(request):
                 print(AmDep)
                 print(depReson)
 
-                Balance.objects.all().update(ConsBalance=F('ConsBalance') + int(AmDep) )
+                Balance.objects.all().update(ConsBalance=F('ConsBalance') + Decimal(AmDep) )
                 if not DepDetReg or not AmDep or not depReson:
                     messages.error(
                         request,
@@ -234,7 +234,7 @@ def Admin(request):
                     return redirect('adminpage')
 
                 try:
-                    AmDep = int(AmDep)
+                    AmDep = Decimal(AmDep)
                 except (ValueError, TypeError):
                     messages.error(request, "Invalid deposit amount.")
                     return redirect('adminpage')
@@ -268,14 +268,14 @@ def Admin(request):
                 ExpReson = request.POST.get('ExReson', '').strip()
                 
 
-                Balance.objects.all().update(ConsBalance=F('ConsBalance') - int(AmEx) )
+                Balance.objects.all().update(ConsBalance=F('ConsBalance') - Decimal(AmEx) )
 
                 if not ExDetReg or not AmEx or not ExpReson:
                     messages.error(request, "Please fill in all fields.")
                     return redirect('adminpage')
 
                 try:
-                    amount = int(AmEx)
+                    amount = Decimal(AmEx)
                 except (ValueError, TypeError):
                     messages.error(request, "Invalid amount.")
                     return redirect('adminpage')
@@ -289,7 +289,7 @@ def Admin(request):
                         balance = Balance.objects.select_for_update().get(
                             reg=ExDetReg
                         )
-                        amount = int(AmEx)
+                        amount = Decimal(AmEx)
 
                         # Check sufficient balance first
                         if balance.AvBalance < amount:
