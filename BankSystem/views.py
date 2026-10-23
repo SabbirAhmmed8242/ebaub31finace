@@ -401,11 +401,13 @@ def Admin(request):
         WithdrawData = RequestaRgWi.objects.all().order_by('id')
         data = Balance.objects.get(reg = "0602610001141002")
         details = Details.objects.all().order_by('-DaT')
+        St_balance = Balance.objects.all()
 
         return render(request, 'Admin.html', {
             'data': data,
             'WithdrawData': WithdrawData,
-            'details': details
+            'details': details,
+            'St_balance': St_balance
         })
 
     except (
@@ -423,6 +425,6 @@ def Admin(request):
     except Exception:
         logger.exception("Unexpected error in Admin view")
         raise
-
+    
 def errpage(request):
     return render(request, 'ErrPage.html')
